@@ -219,14 +219,14 @@ function tokenGetter(pattern)
     };
 }
 //}}}
+let loginList = [[[s, u] for each (u in services[s].getUsernames())] for (s in services)].reduce(function (acc, login) acc.concat(login), []);
+let logoutList = [[s] for (s in services)];
 
 ext.add("login-manager-login", function (ev, arg) {
-    let servicename = arg || "";
-    prompt.reader({
+    prompt.selector({
         message: "Log In (LoginManager)",
-        initialInput: servicename,
-        callback: function (arg) {
-            let [servicename, username] = arg.split(/\s+/);
+        callback: function (index) {
+            let [servicename, username] = loginList[index];
             let service = services[servicename];
             if (!service) {
                 display.echoStatusBar(servicename + "service not found");
@@ -234,22 +234,26 @@ ext.add("login-manager-login", function (ev, arg) {
             }
             service.login(username);
         },
+        header: ["Service", "Username"],
+        collection: loginList,
     });
+    document.getElementById("keysnail-prompt-textbox").value = arg;
     }, "Log In (LoginManager)");
 ext.add("login-manager-logout", function (arg) {
-    let servicename = arg || "";
-    prompt.reader({
+    prompt.selector({
         message: "Log Out (LoginManager)",
-        initialInput: servicename,
-        callback: function (arg) {
-            let [servicename, username] = arg.split(/\s+/);
+        callback: function (index) {
+            let servicename = logoutList[index][0];
             let service = services[servicename];
             if (!service) {
                 display.echoStatusBar(servicename + "service not found");
                 return false;
             }
-            service.logout(username);
+            service.logout();
         },
+        header: ["Service"],
+        collection: logoutList,
     });
+    document.getElementById("keysnail-prompt-textbox").value = arg;
     }, "Log Out (LoginManager)");
 // vim: fdm=marker fenc=utf-8 sw=4 ts=4 et:
