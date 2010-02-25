@@ -102,9 +102,6 @@ function digitURI(num) {
 ext.add("digit-url-incement", function () digitURI(1), "increment last digit in URL");
 ext.add("digit-url-decement", function () digitURI(-1), "decrement last digit in URL");
 
-
-ext.add("login-manager-login", function () false, "login with loginManager");
-ext.add("login-manager-logout", function () false, "logout with loginManager");
 //}}%PRESERVE%
 // ========================================================================= //
 
@@ -123,7 +120,6 @@ key.suspendKey           = "`";
 
 // ================================= Hooks ================================= //
 
-
 hook.setHook('KeyBoardQuit', function (ev) {
     key.generateKey(ev.originalTarget, KeyEvent.DOM_VK_ESCAPE, true);
     var elem = document.commandDispatcher.focusedElement;
@@ -131,12 +127,12 @@ hook.setHook('KeyBoardQuit', function (ev) {
         elem.blur();
     }
     command.closeFindBar();
-    if (!document.getElementById("keysnail-prompt").hidden)
-      prompt.finish(true);
+    if (!document.getElementById("keysnail-prompt").hidden) {
+        prompt.finish(true);
+    }
     gBrowser.focus();
     content.focus();
 });
-
 
 
 // ============================== Black list =============================== //
@@ -331,6 +327,27 @@ key.setViewKey([',', 'r', 'r'], function () {
     userscript.reload();
 }, '設定ファイルを再読み込み');
 
+key.setViewKey([',', 'd', 'p'], function (ev, arg) {
+    ext.exec("dialog-keysnail-preference", arg, ev);
+});
+
+key.setViewKey([',', 'R', 'R'], function () {
+    var appStartup = Cc['@mozilla.org/toolkit/app-startup;1'].getService(Ci.nsIAppStartup);
+    appStartup.quit(appStartup.eRestart | appStartup.eAttemptQuit);
+}, 'Firefox を再起動');
+
+key.setViewKey([',', 'l', 'i'], function (ev, arg) {
+    ext.exec("login-manager-login", arg, ev);
+}, 'Log In (LoginManager)', true);
+
+key.setViewKey([',', 'l', 'u'], function (ev, arg) {
+    ext.exec("login-manager-login", "tumblr", ev);
+}, 'Log In Tumblr', true);
+
+key.setViewKey([',', 'l', 'o'], function (ev, arg) {
+    ext.exec("login-manager-logout", arg, ev);
+}, 'Log Out (LoginManager)', true);
+
 key.setViewKey('<left>', function () {
     var browser = getBrowser();
     if (browser.mCurrentTab.previousSibling) {
@@ -377,11 +394,6 @@ key.setViewKey('M', function (ev, arg) {
     ext.exec("quickmark-mark-page", arg, ev);
 }, 'Mark Page (QuickMark)', true);
 
-key.setViewKey([',', 'd', 'p'], function (ev, arg) {
-    ext.exec('dialog-keysnail-preference', arg, ev);
-}, true);
-
-key.setViewKey([',', 'R', 'R'], function () {
-    var appStartup = Cc['@mozilla.org/toolkit/app-startup;1'].getService(Ci.nsIAppStartup);
-    appStartup.quit(appStartup.eRestart | appStartup.eAttemptQuit);
-}, 'Firefox を再起動');
+key.setViewKey([',', 'l', 't'], function (ev, arg) {
+    ext.exec('login-manager-login', "twitter", ev);
+}, 'Log In Twitter', true);
