@@ -6,3 +6,6 @@ hoge settings.
 
 == quickmark.ks.js
 vimp-like QuickMark for KeySnail
+
+== login-manager.ks.js
+LoginManager (easy login tool) for KeySnail
