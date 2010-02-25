@@ -23,10 +23,10 @@ const PersistName = "quickmark";
 let marks = persist.restore(PersistName) || {};
 
 function jumpURI(uri, bg) {
-    gBrowser.loadOneTab(url, null, null, null, true);
+    gBrowser.loadOneTab(uri, null, null, null, true);
 }
 function openURI(uri) {
-    gBrowser.loadURIWithFlags(url, null, null, null, null);
+    gBrowser.loadURIWithFlags(uri, null, null, null, null);
 }
 ext.add("quickmark-mark-page", function () {
     prompt.reader({
@@ -68,17 +68,12 @@ ext.add("quickmark-open-page", function () {
     });
     }, "Open Page (QuickMark)");
 ext.add("quickmark-delete-page", function () {
-    prompt.reader({
-        message: "Delete Page (QuickMark)",
-        callback: function (arg) {
-            let uri = content.location.href;
-            for (mark in marks) {
-                if (marks[mark] == uri) {
-                    delete marks[mark];
-                }
-            }
-            persist.preserve(marks, PersistName);
-        },
-    });
+    let uri = content.location.href;
+    for (mark in marks) {
+        if (marks[mark] == uri) {
+            delete marks[mark];
+        }
+    }
+    persist.preserve(marks, PersistName);
     }, "Delete Page (QuickMark)");
 // vim: fenc=utf-8 sw=4 ts=4 et:
