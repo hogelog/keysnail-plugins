@@ -2,7 +2,7 @@ var PLUGIN_INFO =
 <KeySnailPlugin>
     <name>LoginManager</name>
     <description>LoginManager for KeySnail</description>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <updateURL>http://github.com/hogelog/keysnail-plugins/raw/master/loginmanager.ks.js</updateURL>
     <author mail="konbu.komuro@gmail.com" homepage="http://hogel.org/">hogelog</author>
     <license>CC0</license>
