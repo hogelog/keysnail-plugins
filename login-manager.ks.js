@@ -155,7 +155,7 @@ function Service(service) //{{{
         request(logoutURL, content, success, error);
     };
     self.getLogins = function() {
-        return [loginManager.findLogins({}, host, host, null) for each(host in service.HOST)]
+        return [loginManager.findLogins({}, host, "", null) for each(host in service.HOST)]
         .reduce(function(sum, logins){
             return sum.concat(logins.filter(function(login)
                 sum.length==0 || sum.filter(function(x)
