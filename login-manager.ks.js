@@ -239,7 +239,7 @@ ext.add("login-manager-login", function (ev, arg) {
     });
     document.getElementById("keysnail-prompt-textbox").value = arg;
     }, "Log In (LoginManager)");
-ext.add("login-manager-logout", function (arg) {
+ext.add("login-manager-logout", function (ev, arg) {
     prompt.selector({
         message: "Log Out (LoginManager)",
         callback: function (index) {
