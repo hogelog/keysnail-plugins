@@ -9,3 +9,6 @@ vimp-like QuickMark for KeySnail
 
 == login-manager.ks.js
 LoginManager (easy login tool) for KeySnail
+
+== greasemonkey.ks.js
+Greasemonkey Util for KeySnail
