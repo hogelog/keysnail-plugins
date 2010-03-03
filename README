@@ -12,3 +12,6 @@ LoginManager (easy login tool) for KeySnail
 
 == greasemonkey.ks.js
 Greasemonkey Util for KeySnail
+
+== hook-menu-popup.ks.js
+add Hook Menu Popup Event
