@@ -12,7 +12,62 @@ var PLUGIN_INFO =
     </provides>
     <options>
     </options>
-    <detail><![CDATA[]]></detail>
+    <detail><![CDATA[
+=== Usage ===
+
+To paste code below to your .keysnail.js makes add hook menu popup event.
+
+>||
+function stopKeySnail (ev) {
+    key.suspended = true;
+}
+function restartKeySnail (ev) {
+    key.suspended = false;
+}
+hook.setHook('MenuPopupShowing', stopKeySnail);
+hook.setHook('MenuPopupHiding', restartKeySnail);
+||<
+
+In this example, you can disable keysnail when showing popup menu.
+
+==== Hook Points ====
+HookMenuPopup hook points are as follows.
+- MenuPopupShowing
+- MenuPopupHiding
+- MainMenuPopupShowing
+- MainMenuPopupHiding
+- ContextMenuPopupShowing
+- ContextMenuPopupHiding
+
+    ]]></detail>
+    <detail lang="ja"><![CDATA[
+=== 使い方 ===
+
+以下のようなコードを.keysnail.jsに記述することでメニューポップアップイベントにフックを追加できます。
+
+>||
+function stopKeySnail (ev) {
+    key.suspended = true;
+}
+function restartKeySnail (ev) {
+    key.suspended = false;
+}
+hook.setHook('MenuPopupShowing', stopKeySnail);
+hook.setHook('MenuPopupHiding', restartKeySnail);
+||<
+
+この例ではポップアップが表示されている間KeySnailを停止させます。
+
+==== フックポイント ====
+HookMenuPopupでは以下のフックポイントを提供します。
+- MenuPopupShowing
+- MenuPopupHiding
+- MainMenuPopupShowing
+- MainMenuPopupHiding
+- ContextMenuPopupShowing
+- ContextMenuPopupHiding
+
+    ]]></detail>
 </KeySnailPlugin>;
 
 function callMainMenuPopupShowing (ev) {
