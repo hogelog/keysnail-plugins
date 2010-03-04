@@ -2,7 +2,7 @@ var PLUGIN_INFO =
 <KeySnailPlugin>
     <name>HookMenuPopup</name>
     <description>add Hook Menu Popup Event</description>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <updateURL>http://github.com/hogelog/keysnail-plugins/raw/master/hook-menu-popup.ks.js</updateURL>
     <author mail="konbu.komuro@gmail.com" homepage="http://hogel.org/">hogelog</author>
     <license>CC0</license>
@@ -70,6 +70,9 @@ HookMenuPopupでは以下のフックポイントを提供します。
     ]]></detail>
 </KeySnailPlugin>;
 
+var listeners = plugins.hook_menu_popup ? plugins.hook_menu_popup.listeners : [];
+plugins.hook_menu_popup = __ksSelf__;
+
 function callMainMenuPopupShowing (ev) {
     hook.callHook("MainMenuPopupShowing", ev);
     hook.callHook("MenuPopupShowing", ev);
@@ -87,14 +90,32 @@ function callContextMenuPopupHiding (ev) {
     hook.callHook("MenuPopupHiding", ev);
 }
 
+function addListener(node, show, hide) {
+    node.addEventListener("popupshowing", show, false);
+    node.addEventListener("popuphiding", hide, false);
+    listeners.push([node, show, hide]);
+}
+function removeListeners() {
+    for (let i=0;i<listeners.length;++i) {
+        let [node, show, hide] = listeners[i];
+        node.removeEventListener("popupshowing", show, false);
+        node.removeEventListener("popuphiding", hide, false);
+    }
+    listeners = [];
+}
+
+if (listeners.length > 0) {
+    removeListeners();
+}
+
 var menus = document.getElementById("main-menubar").childNodes;
 for (let i=0;i<menus.length;++i) {
     let popup = menus[i].firstChild;
-    popup.addEventListener("popupshowing", callMainMenuPopupShowing, false);
-    popup.addEventListener("popuphiding", callMainMenuPopupHiding, false);
+    addListener(popup, callMainMenuPopupShowing, callMainMenuPopupHiding);
 }
 var contextMenu = document.getElementById("contentAreaContextMenu");
-contextMenu.addEventListener("popupshowing", callContextMenuPopupShowing, false);
-contextMenu.addEventListener("popuphiding", callContextMenuPopupHiding, false);
+addListener(contextMenu, callContextMenuPopupShowing, callContextMenuPopupHiding);
+
+hook.addToHook("Unload", removeListeners);
 
 // vim: fenc=utf-8 sw=4 ts=4 et:
