@@ -2,11 +2,11 @@ var PLUGIN_INFO =
 <KeySnailPlugin>
     <name>LoginManager</name>
     <description>LoginManager for KeySnail</description>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <updateURL>http://github.com/hogelog/keysnail-plugins/raw/master/loginmanager.ks.js</updateURL>
     <author mail="konbu.komuro@gmail.com" homepage="http://hogel.org/">hogelog</author>
     <license>CC0</license>
-    <minVersion>1.5.0</minVersion>
+    <minVersion>1.5.1</minVersion>
     <include>main</include>
     <provides>
         <ext>login-manager-login</ext>
@@ -236,8 +236,8 @@ ext.add("login-manager-login", function (ev, arg) {
         },
         header: ["Service", "Username"],
         collection: loginList,
+        initialInput: arg,
     });
-    document.getElementById("keysnail-prompt-textbox").value = arg;
     }, "Log In (LoginManager)");
 ext.add("login-manager-logout", function (ev, arg) {
     prompt.selector({
@@ -253,7 +253,7 @@ ext.add("login-manager-logout", function (ev, arg) {
         },
         header: ["Service"],
         collection: logoutList,
+        initialInput: arg,
     });
-    document.getElementById("keysnail-prompt-textbox").value = arg;
     }, "Log Out (LoginManager)");
 // vim: fdm=marker fenc=utf-8 sw=4 ts=4 et:
